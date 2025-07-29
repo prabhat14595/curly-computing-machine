@@ -61,3 +61,29 @@ The project includes a Dockerfile and docker-compose.yml for containerization.
 *   Implement frontend functionality to interact with the backend API.
 *   Add more features to the backend, such as user profile management.
 *   Improve the user interface.
+
+## Frontend Problems and Plan
+
+**Problems:**
+
+1.  The frontend application is not starting due to a "react-scripts not found" error.
+2.  The registration form in `App.tsx` might not be correctly sending requests to the backend.
+
+**Plan:**
+
+1.  **Resolve "react-scripts not found" error:**
+    *   Ensure Node.js and npm are installed correctly.
+    *   Verify the "start" script in `frontend/package.json`.
+    *   Clear the npm cache: `npm cache clean --force`.
+    *   Reinstall dependencies: `npm install`.
+    *   If the issue persists, try uninstalling and reinstalling `react-scripts` globally.
+    *   If still not working, try using yarn or pnpm.
+2.  **Verify the registration form:**
+    *   Check the `fetch` request in `frontend/src/App.tsx` to ensure it is sending the correct data to the correct endpoint (`/auth/register`).
+    *   Check the backend logs for any errors related to the registration request.
+3.  **Implement Login Functionality:**
+    *   Create a login form in `App.tsx`.
+    *   Implement a `fetch` request to the `/auth/token` endpoint.
+    *   Store the access token in local storage.
+4.  **Implement Protected Route Access:**
+    *   Use the access token to authorize requests to protected routes (e.g., `/users/me`).

@@ -1,61 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import { useState } from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
+import DashboardPage from './pages/Dashboard';
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        alert('User registered successfully!');
-      } else {
-        const errorData = await response.json();
-        alert(errorData.detail || 'Registration failed.');
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      alert('Registration failed.');
-    }
-  };
+  const isLoggedIn = !!localStorage.getItem('token'); // Check if user is logged in
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit">Register</button>
-        </form>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={isLoggedIn ? <DashboardPage /> : <Navigate to="/login" />}
+        />
+        <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect to login for any other route */}
+      </Routes>
+    </Router>
   );
 }
 

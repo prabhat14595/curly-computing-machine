@@ -5,7 +5,8 @@ from backend.crud import get_user_by_username, create_user, verify_password
 from backend.database import SessionLocal, Base, engine
 from backend import schemas
 from backend import models
-from jose import JWTError, jwt
+from jose import jwt
+from jose.__init__ import JWTError
 from datetime import timedelta, datetime
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
